@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements moveAdapter.moveT
             int type = integers[0];
             List<Movie> movieList1 = new ArrayList<>();
             try {
-                movieList1 = Jsonget.jsonParsePopularMove(type);
+                movieList1 = JSONProcessor.jsonParsePopularMove(type);
             } catch (Exception e) {
                 e.printStackTrace();
             }
