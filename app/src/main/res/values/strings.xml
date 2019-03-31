@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Popular Movies,Part1</string>
+    <string name="FilmTitle">Move Title</string>
+    <string name="vote_count">vote count</string>
+    <string name="vote_av">vote average</string>
+    <string name="move_id">Move ID</string>
+    <string name="original_title">originalt title</string>
+    <string name="popularity">popularity</string>
+    <string name="poster_path">move poster</string>
+    <string name="original_language">original language</string>
+    <string name="overview">overview</string>
+    <string name="release_date">release date</string>
+    <string name="generic_id">genre_ids</string>
+    <string name="adult">adult</string>
+</resources>
