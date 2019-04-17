@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.service.notification.ConditionProviderService;
@@ -35,16 +37,25 @@ public class MainActivity extends AppCompatActivity implements moveAdapter.moveT
     private moveAdapter moveAdapter;
     private List<Movie> movieLisst=new ArrayList<>();
     private int menuItem;
+    private  ConnectivityManager connectivityManager;
+    private NetworkInfo networkInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        connectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkInfo=connectivityManager.getActiveNetworkInfo();
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         recyclerView=(RecyclerView)findViewById(R.id.rv);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        new moveSync().execute(1);
-    }
+        if(networkInfo!=null) {
+            new moveSync().execute(1);
+        }
+        else {
+            NetworkError();
+        }
+        }
 
     @Override
     public void moving(Movie movie, int Position) {
@@ -110,12 +121,24 @@ public class MainActivity extends AppCompatActivity implements moveAdapter.moveT
         int selected=item.getItemId();
         switch (selected){
             case R.id.pop:
-                new moveSync().execute(1);
+                if(networkInfo!=null){
+                new moveSync().execute(1);}
+                else {
+                    NetworkError();
+                }
                 break;
             case R.id.rated:
-                new moveSync().execute(2);
+                if(networkInfo!=null){
+                new moveSync().execute(2);}
+                else {
+                    NetworkError();                }
                 break;
         }
         return true;
+    }
+
+    public void NetworkError(){
+        Toast.makeText(this,"There is No Network Connecting",Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }
